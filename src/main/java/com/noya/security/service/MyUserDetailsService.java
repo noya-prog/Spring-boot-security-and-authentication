@@ -1,5 +1,6 @@
 package com.noya.security.service;
 
+import com.noya.security.model.UserPrincipal;
 import com.noya.security.model.Users;
 import com.noya.security.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserRepo repo;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user1 = repo.findByUsername(username);
-        if (user1 == null)
+        Users user = repo.findByUsername(username);
+        if (user == null)
             throw new UsernameNotFoundException("User not found");
 
-        return null;
+        return new UserPrincipal(user);
     }
 }
